@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">StockIT</string>
+    <string name="titel">StockIT</string>
+    <string name="titel_unterschrift">Stock Up</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="sign_up">SIGN UP</string>
 </resources>
