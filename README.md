@@ -8,4 +8,5 @@ StockIT ist eine App die dabei hilft ihre Wöchentlichen Lebensmitteleinkauf zu 
  - Google Maps Funktion die Nächsten Supermarkt anzeigen 
  - Einkaufzettel erstellen und Bearbeitung für den einzelen auch möglich
  - Rechnung des benötigten Bedarfs für Restaurants und Privat Häuser 
- - Einstellung können auch für Restaurants angepasst werden dann mit Mengen angaben
+ - Unterscheidung zwischen restaurant oder Privat-Haushalt 
+ - Scannen des Barcodes zum leichteren hinzufügen der Lebensmittel
