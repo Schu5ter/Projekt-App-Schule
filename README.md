@@ -7,8 +7,7 @@ StockIT ist eine App die dabei hilft ihre Wöchentlichen Lebensmitteleinkauf zu 
  - Multi-User Funktion mehrere User können einen Einkaufszettel Bearbeiten und ihre benötigten LM hinzufügen 
  - Google Maps Funktion die Nächsten Supermarkt anzeigen 
  - Einkaufzettel erstellen und Bearbeitung für den einzelen auch möglich
- - Rechnung des benötigten Bedarfs für Restaurants und Privat Häuser 
- - Unterscheidung zwischen restaurant oder Privat-Haushalt 
+ - Rechnung des benötigten Bedarf
  - Scannen des Barcodes zum leichteren hinzufügen der Lebensmittel
 
 # Milestones
@@ -19,18 +18,20 @@ StockIT ist eine App die dabei hilft ihre Wöchentlichen Lebensmitteleinkauf zu 
 	- Verbindung mit DB (firebase) 
 Ende: 20.11.2019
 
-2. BarCodeScanner und Open Source DB verbindung 
+2. BarCodeScanner und Open Source DB verbindung mit Pop up und Ordner Strucktur
 	- Bar code scanner -> opengitndb.org 
+	- User ermöglichen eigene Ordnungsstruktur zu erstellen 
+	- Pop up -> ordner menü
 Ende: 20.12.2019
 
 3. Googel Map und Sortier funktion 
 	- Map-(bezüglich Supermarkt)
-	- User ermöglichen eigene Ordnungsstruktur zu erstellen 
 	- GUI
 Ende: 20.01.2020
 
 4. Endgültige Design und Funktions fertigstellung  
-	- (Aufklapp Menu) 
+
+Eventuelle zusatzfunktionen: 
 	- (Online-Shop Anbindung)
 
 MILESTONES:  Beenden am 20.1 
