@@ -4,17 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/solid"
     tools:context=".SignUp">
 
 
     <TextView
         android:id="@+id/tv_signIn"
         android:layout_width="250dp"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="32dp"
+        android:layout_marginBottom="92dp"
         android:text="@string/sign_in"
         android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/et_usernameSignUp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,81 +26,96 @@
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="340dp"
+        android:layout_marginTop="64dp"
         android:text="@string/sign_up"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.105" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_signIn" />
+
 
     <EditText
         android:id="@+id/et_usernameSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="650dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="@string/userName"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/et_password"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_signIn"
-        app:layout_constraintVertical_bias="0.47" />
+        app:layout_constraintStart_toStartOf="@+id/tv_signUp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_signUp" />
 
     <EditText
         android:id="@+id/et_usernameSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginBottom="512dp"
         android:ems="10"
         android:hint="@string/userName"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/et_password"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_signIn"
-        app:layout_constraintVertical_bias="0.458" />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/tv_signIn" />
 
     <EditText
-        android:id="@+id/et_password"
+        android:id="@+id/et_passwordSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/tv_signUp"
+        app:layout_constraintBottom_toTopOf="@+id/et_usernameSignUp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_signIn"
-        app:layout_constraintVertical_bias="0.281" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_signIn" />
 
     <CheckBox
         android:id="@+id/cB_stayLoggedIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/stayLoggedIn"
-        app:layout_constraintBottom_toTopOf="@+id/tv_signUp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_password"
-        app:layout_constraintVertical_bias="0.108" />
-
-    <Button
-        android:id="@+id/btn_"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:background="@drawable/costum_buttons"
-        android:text="@string/sign_in"
-        android:textColor="#ffffff"
-        app:layout_constraintBottom_toTopOf="@+id/tv_signUp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_signIn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cB_stayLoggedIn"
-        app:layout_constraintVertical_bias="0.175" />
+        app:layout_constraintTop_toBottomOf="@+id/et_usernameSignUp" />
+
+    <Button
+        android:id="@+id/btn_signIn"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/costum_buttons"
+        android:text="@string/sign_in"
+        android:textColor="#ffffff"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cB_stayLoggedIn" />
+
+    <EditText
+        android:id="@+id/et_passwordSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="@+id/et_usernameSignIn"
+        app:layout_constraintTop_toBottomOf="@+id/et_usernameSignIn" />
+
+    <EditText
+        android:id="@+id/et_passwordBestätigen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="@string/passwordbestätigen"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="@+id/et_passwordSignUp"
+        app:layout_constraintTop_toBottomOf="@+id/et_passwordSignUp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
