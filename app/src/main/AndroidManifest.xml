@@ -9,9 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Test_DB"></activity>
+        <activity
+            android:name=".Drawer_TestActivity"
+            android:label="@string/title_activity_drawer__test"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Test_DB" />
         <activity android:name=".SignUp" />
-        <activity android:name=".Act2" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
