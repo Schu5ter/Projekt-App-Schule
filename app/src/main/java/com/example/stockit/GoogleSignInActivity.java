@@ -1,11 +1,17 @@
 package com.example.stockit;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -23,7 +29,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 
 
-public class GoogleSignInActivity extends BaseActivity implements
+public class GoogleSignInActivity extends AppCompatActivity implements
 
         View.OnClickListener {
 
@@ -158,6 +164,7 @@ public class GoogleSignInActivity extends BaseActivity implements
 
                             updateUI(user);
 
+
                         } else {
 
                             // If sign in fails, display a message to the user.
@@ -271,4 +278,69 @@ public class GoogleSignInActivity extends BaseActivity implements
 
     }
 
+    @VisibleForTesting
+
+    public ProgressDialog mProgressDialog;
+
+
+
+    public void showProgressDialog() {
+
+        if (mProgressDialog == null) {
+
+            mProgressDialog = new ProgressDialog(this);
+
+            mProgressDialog.setMessage(getString(R.string.loading));
+
+            mProgressDialog.setIndeterminate(true);
+
+        }
+
+
+
+        mProgressDialog.show();
+
+    }
+
+
+
+    public void hideProgressDialog() {
+
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+
+            mProgressDialog.dismiss();
+
+        }
+
+    }
+
+
+
+    public void hideKeyboard(View view) {
+
+        final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        if (imm != null) {
+
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+        }
+
+    }
+
+
+
+    @Override
+
+    public void onStop() {
+
+        super.onStop();
+
+        hideProgressDialog();
+
+    }
+
+
+
 }
+
