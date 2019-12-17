@@ -46,14 +46,14 @@ public class GoogleSignInActivity extends AppCompatActivity implements
     private TextView mStatusTextView;
    // private TextView mDetailTextView;
 
+    Intent intent = getIntent();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase_auth);
-        Intent intent = getIntent();
-        // Views
 
         mStatusTextView = findViewById(R.id.status);
        // mDetailTextView = findViewById(R.id.detail);
@@ -76,10 +76,9 @@ public class GoogleSignInActivity extends AppCompatActivity implements
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // [START initialize_auth]
+
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-        // [END initialize_auth]
 
     }
 
@@ -90,7 +89,7 @@ public class GoogleSignInActivity extends AppCompatActivity implements
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+
     }
 
     // [END on_start_check_user]
@@ -119,11 +118,6 @@ public class GoogleSignInActivity extends AppCompatActivity implements
 
                 Log.w(TAG, "Google sign in failed", e);
 
-                // [START_EXCLUDE]
-
-                updateUI(null);
-
-                // [END_EXCLUDE]
 
             }
 
@@ -139,8 +133,6 @@ public class GoogleSignInActivity extends AppCompatActivity implements
         // [START_EXCLUDE silent]
 
         showProgressDialog();
-
-        // [END_EXCLUDE]
 
 
 
@@ -162,7 +154,7 @@ public class GoogleSignInActivity extends AppCompatActivity implements
 
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            updateUI(user);
+
 
 
                         } else {
@@ -171,7 +163,6 @@ public class GoogleSignInActivity extends AppCompatActivity implements
 
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
 
-                            updateUI(null);
 
                         }
 
@@ -199,63 +190,13 @@ public class GoogleSignInActivity extends AppCompatActivity implements
         // Firebase sign out
         mAuth.signOut();
 
-        // Google sign out
-        mGoogleSignInClient.signOut().addOnCompleteListener(this,
-                new OnCompleteListener<Void>() {
-                    @Override
 
-                    public void onComplete(@NonNull Task<Void> task) {
-
-                        updateUI(null);
-
-                    }
-
-                });
 
     }
 
 
 
-    private void revokeAccess() {
 
-        // Firebase sign out
-        mAuth.signOut();
-
-        // Google revoke access
-        mGoogleSignInClient.revokeAccess().addOnCompleteListener(this,
-
-                new OnCompleteListener<Void>() {
-
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        updateUI(null);
-
-                    }
-                });
-    }
-
-
-
-    private void updateUI(FirebaseUser user) {
-        hideProgressDialog();
-
-        if (user != null) {
-
-            mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
-          //  mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
-
-            findViewById(R.id.signInButton).setVisibility(View.GONE);
-            findViewById(R.id.signOutAndDisconnect).setVisibility(View.VISIBLE);
-
-        } else {
-            mStatusTextView.setText(R.string.signed_out);
-         //   mDetailTextView.setText(null);
-
-            findViewById(R.id.signInButton).setVisibility(View.VISIBLE);
-            findViewById(R.id.signOutAndDisconnect).setVisibility(View.GONE);
-
-        }
-    }
 
     @Override
     public void onClick(View v) {
@@ -269,10 +210,6 @@ public class GoogleSignInActivity extends AppCompatActivity implements
         } else if (i == R.id.signOutButton) {
 
             signOut();
-
-        } else if (i == R.id.weiterbutton) {
-
-            revokeAccess();
 
         }
 
@@ -315,18 +252,6 @@ public class GoogleSignInActivity extends AppCompatActivity implements
     }
 
 
-
-    public void hideKeyboard(View view) {
-
-        final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        if (imm != null) {
-
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-
-        }
-
-    }
 
 
 
