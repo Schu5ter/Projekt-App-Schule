@@ -99,7 +99,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener  {
                         // Google Sign In was successful, authenticate with Firebase
 
                         GoogleSignInAccount account = task.getResult(ApiException.class);
-
                         firebaseAuthWithGoogle(account);
 
                     } catch (ApiException e) {
@@ -141,13 +140,9 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener  {
                                     // Sign in success, update UI with the signed-in user's information
 
                                     Log.d(TAG, "signInWithCredential:success");
-
                                     FirebaseUser user = mAuth.getCurrentUser();
 
-                                    // for start after sign in (startActivity(Name der Activity);)
-
-
-
+                                    startActivity();
 
                                 } else {
 
@@ -255,6 +250,11 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener  {
 
                 hideProgressDialog();
 
+            }
+
+            public void startActivity() {
+                Intent intent = new Intent(this, Overview.class);
+                startActivity(intent);
             }
 
 

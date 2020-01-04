@@ -157,6 +157,7 @@ public class GoogleSignInActivity extends AppCompatActivity implements
 
 
 
+
                         } else {
 
                             // If sign in fails, display a message to the user.
@@ -264,6 +265,7 @@ public class GoogleSignInActivity extends AppCompatActivity implements
         hideProgressDialog();
 
     }
+
 
 
 
