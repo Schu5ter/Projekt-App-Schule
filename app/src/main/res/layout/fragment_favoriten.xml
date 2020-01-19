@@ -2,12 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_green_light">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/startColor">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Personal Favoriten"/>
+        android:id="@+id/personal_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:text="Personal Favoriten"
+        android:textColor="#000"
+        android:textSize="17sp" />
+
 
 
 </RelativeLayout>

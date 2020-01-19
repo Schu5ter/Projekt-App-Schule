@@ -7,16 +7,23 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Overview extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private FirebaseAuth mAuth;
+    private GoogleSignInClient mGoogleSignInClient;
 
 
     @Override
@@ -24,11 +31,15 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
 
-        mAuth.getInstance();
+         mAuth.getInstance();
 
-
+         //Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
+
+         //Floating Action Button
+
+
 
             drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -61,8 +72,8 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
                         new FavoritenFragment()).commit();
                 break;
             case R.id.nav_logout:
-                mAuth.signOut();
-                Toast.makeText(this, "Logged out from Firebase", Toast.LENGTH_SHORT).show();
+                revokeAccess();
+                Toast.makeText(this, "Logged out from StockIT", Toast.LENGTH_SHORT).show();
                 break;
         }
 
@@ -71,11 +82,32 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
         return true;
     }
 
+    public void revokeAccess(){
+        //Firebase Sign Out
+        mAuth.signOut();
+
+        //Google Revoke Access
+        mGoogleSignInClient.revokeAccess().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                startActivity();
+            }
+        });
+
+    }
+
+
+
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
+
+    }
+    public void startActivity() {
+        Intent intent = new Intent(this, SignUp.class);
+        startActivity(intent);
     }
 }

@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="176dp"
-    android:background="@color/colorAccent"
+    android:background="@color/endColor"
     android:gravity="bottom"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
@@ -13,10 +13,11 @@
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_launcher_round"/>
     <TextView
+        android:id="@+id/nav_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="test"
+        android:text="@string/userName"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         />
     <TextView

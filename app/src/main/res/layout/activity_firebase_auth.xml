@@ -3,15 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
 
     android:id="@+id/main_layout"
-
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
-
     android:background="@color/grey_100"
-
     android:orientation="vertical"
-
     android:weightSum="4">
 
 
@@ -19,13 +14,9 @@
     <LinearLayout
 
         android:layout_width="match_parent"
-
         android:layout_height="0dp"
-
         android:layout_weight="3"
-
         android:gravity="center_horizontal"
-
         android:orientation="vertical">
 
 
@@ -35,15 +26,10 @@
         <TextView
 
             android:id="@+id/titleText"
-
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
-
             android:layout_marginBottom="@dimen/title_bottom_margin"
-
             android:text="@string/google_title_text"
-
             android:theme="@style/ThemeOverlay.MyTitleText" />
 
 
@@ -51,9 +37,7 @@
         <TextView
 
             android:id="@+id/status"
-
             style="@style/ThemeOverlay.MyTextDetail"
-
             android:text="@string/signed_out" />
 
 
@@ -68,7 +52,6 @@
 
 
     <RelativeLayout
-
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -77,17 +60,11 @@
 
 
         <com.google.android.gms.common.SignInButton
-
             android:id="@+id/signInButton"
-
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
-
             android:layout_centerInParent="true"
-
             android:visibility="visible"
-
             tools:visibility="gone" />
 
 
@@ -95,21 +72,13 @@
         <LinearLayout
 
             android:id="@+id/signOutAndDisconnect"
-
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content"
-
             android:layout_centerInParent="true"
-
             android:orientation="horizontal"
-
             android:paddingLeft="16dp"
-
             android:paddingRight="16dp"
-
             android:visibility="gone"
-
             tools:visibility="visible">
 
 
@@ -117,19 +86,12 @@
             <Button
 
                 android:id="@+id/signOutButton"
-
                 android:layout_marginStart="@dimen/button_horizontal_margin"
-
                 android:layout_marginEnd="@dimen/button_horizontal_margin"
-
                 android:layout_width="0dp"
-
                 android:layout_height="wrap_content"
-
                 android:layout_weight="1"
-
                 android:text="@string/sign_out"
-
                 android:theme="@style/ThemeOverlay.MyDarkButton" />
 
 
@@ -144,9 +106,7 @@
                 android:layout_marginStart="@dimen/button_horizontal_margin"
 
                 android:layout_marginEnd="@dimen/button_horizontal_margin"
-
                 android:layout_weight="1"
-
                 android:text="@string/weiter"
                 android:theme="@style/ThemeOverlay.MyDarkButton" />
 
