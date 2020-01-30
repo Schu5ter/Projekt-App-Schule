@@ -5,10 +5,12 @@
     <string name="sign_up">SIGN UP</string>
     <string name="password">Password</string>
     <string name="passwordbestätigen">Password bestätigen</string>
-    <string name="userName">Benutzername</string>
+    <string name="currentUser">Current user </string>
+    <string name="userName">Username </string>
     <string name="stayLoggedIn">Stay Logged In</string>
     <string name="app_name">StockIT</string>
     <string name="weiter">Weiter</string>
+    <string name="email">E-Mail</string>
     <string name="navigation_drawer_open">Open Navigation drawer</string>
     <string name="navigation_drawer_close">Close Navigation drawer</string>
 

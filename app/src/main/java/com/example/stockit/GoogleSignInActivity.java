@@ -29,9 +29,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 
 
-public class GoogleSignInActivity extends AppCompatActivity implements
-
-        View.OnClickListener {
+public class GoogleSignInActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -153,6 +151,7 @@ public class GoogleSignInActivity extends AppCompatActivity implements
                             Log.d(TAG, "signInWithCredential:success");
 
                             FirebaseUser user = mAuth.getCurrentUser();
+                            user.toString();
 
 
 
