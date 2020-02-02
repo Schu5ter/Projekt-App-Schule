@@ -12,10 +12,7 @@
             android:id="@+id/nav_gruppe"
             android:icon="@drawable/ic_gruppe"
             android:title="Group Stock" />
-        <item
-            android:id="@+id/nav_favorite"
-            android:icon="@drawable/ic_favorite"
-            android:title="Favoriten" />
+
     </group>
     <item android:title="Logout">
         <menu>

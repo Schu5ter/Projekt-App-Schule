@@ -11,8 +11,24 @@
     <string name="app_name">StockIT</string>
     <string name="weiter">Weiter</string>
     <string name="email">E-Mail</string>
+    <string name="name">Name des Artikels</string>
+    <string name="anzahl">Anzahl der Artikel</string>
+    <string name="createAccount">Create Account</string>
     <string name="navigation_drawer_open">Open Navigation drawer</string>
     <string name="navigation_drawer_close">Close Navigation drawer</string>
+    <string name="addArtikel">Add Artikel</string>
+    <string-array name="numbers_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
 
 
     <string name="label_google_sign_in">Firebase + Google Sign In</string>

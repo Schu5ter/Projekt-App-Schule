@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -19,11 +21,23 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class Overview extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabaseReference;
     private GoogleSignInClient mGoogleSignInClient;
+    private ArrayList<Artikel> mArtikel = new ArrayList<>();
+    private RecyclerView recyclerView;
+
+
 
 
     @Override
@@ -31,16 +45,24 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
 
-         mAuth.getInstance();
+        recyclerView = findViewById(R.id.recyclerview);
 
-         //Toolbar
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("artikel");
+        //Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
          //Floating Action Button
+        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Overview.this, PopupEintreage.class));
+            }
+        });
 
 
-
+        //Nav Drawer
             drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -53,7 +75,37 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new PersonalFragment()).commit();
         navigationView.setCheckedItem(R.id.nav_personal);
+
+
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                mArtikel.clear();
+
+                for(DataSnapshot artikelsnapshot: dataSnapshot.getChildren()){
+                    Artikel artikel = artikelsnapshot.getValue(Artikel.class);
+                    mArtikel.add(artikel);
+
+                }
+               initRecyclerView();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
     }
 
     @Override
@@ -67,12 +119,8 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new GroupFragment()).commit();
                 break;
-            case R.id.nav_favorite:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new FavoritenFragment()).commit();
-                break;
             case R.id.nav_logout:
-                revokeAccess();
+                signOut();
                 Toast.makeText(this, "Logged out from StockIT", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -82,17 +130,16 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
         return true;
     }
 
-    public void revokeAccess(){
+    public void signOut(){
         //Firebase Sign Out
         mAuth.signOut();
-
-        //Google Revoke Access
-        mGoogleSignInClient.revokeAccess().addOnCompleteListener(this, new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                startActivity();
-            }
-        });
+        mGoogleSignInClient.signOut().addOnCompleteListener(this,
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        startActivity();
+                    }
+                });
 
     }
 
@@ -110,4 +157,16 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
         Intent intent = new Intent(this, SignUp.class);
         startActivity(intent);
     }
+
+
+
+    private void initRecyclerView(){
+
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(mArtikel,this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+
+
 }
