@@ -21,7 +21,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,7 +36,7 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
     private GoogleSignInClient mGoogleSignInClient;
     private ArrayList<Artikel> mArtikel = new ArrayList<>();
     private RecyclerView recyclerView;
-    private FirebaseUser user;
+    private String user;
 
 
 
@@ -49,7 +48,7 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
 
         recyclerView = findViewById(R.id.recyclerview);
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("artikel");
         //Toolbar
@@ -96,10 +95,10 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
 
                 for(DataSnapshot artikelsnapshot: dataSnapshot.getChildren()){
 
-                        Artikel artikel = artikelsnapshot.getValue(Artikel.class);
-                    //if(artikel.getUserId().equals(user)) {
+                    Artikel artikel = artikelsnapshot.getValue(Artikel.class);
+                    if(artikel.getUserId().equals(user)) {
                         mArtikel.add(artikel);
-                  //  }
+                    }
                 }
                initRecyclerView();
             }

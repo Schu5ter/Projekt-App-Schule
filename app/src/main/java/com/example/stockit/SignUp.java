@@ -304,6 +304,15 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, T
 
     public void updateUI(FirebaseUser currentUser) {
         hideProgressDialog();
+        if (currentUser != null) {  // User is signed in
+            Toast.makeText(this, "U Signed in Successfully", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, Overview.class));
+
+            // go to main page
+        } else {
+            Toast.makeText(this, "Sign in Faild", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, SignUp.class));
+        }
 
     }
 
