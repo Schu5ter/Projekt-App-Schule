@@ -17,7 +17,6 @@
         android:layout_marginEnd="24dp"
         android:background="@drawable/costum_buttons"
         android:gravity="center"
-        android:onClick="toSignUp"
         android:text="@string/sign_in"
         android:textColor="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"

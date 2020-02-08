@@ -12,8 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -21,7 +24,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private static final String TAG = "RecyclerViewAdapter";
 
 
-    private ArrayList<Artikel> mArtikelnamen ;
+    private ArrayList<Artikel> mArtikelnamen;
     private Context mContext;
 
     public RecyclerViewAdapter(ArrayList<Artikel> mArtikelnamen, Context mContext) {
@@ -30,8 +33,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public ViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent,false);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -39,20 +42,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: called.");
-        //Firebase daten
 
-         Artikel artikel = mArtikelnamen.get(position);
+
+        final Artikel artikel = mArtikelnamen.get(position);
 
         holder.artikelname.setText(artikel.getArtikelname());
-        holder.artikelanzahl.setText((artikel.getNumber()));
+        holder.artikelanzahl.setText((artikel.getNumber() + "x"));
+        holder.delete.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+
+
+                deleteArtikel(artikel.getArtikelId());
+
+            }
+        });
         holder.parent_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext,"funktioniert" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, artikel.getArtikelname(), Toast.LENGTH_SHORT).show();
             }
         });
-
 
 
     }
@@ -63,23 +74,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
-
-
-
-
-
-
-
-
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView artikelname;
         TextView artikelanzahl;
         ImageView balken;
-        Button delete;
+        ImageView delete;
         RelativeLayout parent_layout;
 
-        public ViewHolder( View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
             balken = itemView.findViewById(R.id.balken);
             artikelanzahl = itemView.findViewById(R.id.artikelanzahl);
@@ -88,8 +91,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             delete = itemView.findViewById(R.id.delete);
 
 
-
         }
+    }
+
+    private void deleteArtikel(String artikelId) {
+        DatabaseReference dbArtikel = FirebaseDatabase.getInstance().getReference("artikel").child(artikelId);
+
+        dbArtikel.removeValue();
+        Toast.makeText(mContext, "Artikel gelöscht", Toast.LENGTH_SHORT).show();
+
+
     }
 
 }

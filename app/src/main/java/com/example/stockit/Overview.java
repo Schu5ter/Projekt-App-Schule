@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,6 +37,7 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
     private GoogleSignInClient mGoogleSignInClient;
     private ArrayList<Artikel> mArtikel = new ArrayList<>();
     private RecyclerView recyclerView;
+    private FirebaseUser user;
 
 
 
@@ -46,6 +48,8 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
         setContentView(R.layout.activity_overview);
 
         recyclerView = findViewById(R.id.recyclerview);
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("artikel");
         //Toolbar
@@ -91,9 +95,11 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
                 mArtikel.clear();
 
                 for(DataSnapshot artikelsnapshot: dataSnapshot.getChildren()){
-                    Artikel artikel = artikelsnapshot.getValue(Artikel.class);
-                    mArtikel.add(artikel);
 
+                        Artikel artikel = artikelsnapshot.getValue(Artikel.class);
+                    //if(artikel.getUserId().equals(user)) {
+                        mArtikel.add(artikel);
+                  //  }
                 }
                initRecyclerView();
             }
@@ -114,10 +120,6 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.nav_personal:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new PersonalFragment()).commit();
-                break;
-            case R.id.nav_gruppe:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new GroupFragment()).commit();
                 break;
             case R.id.nav_logout:
                 signOut();
