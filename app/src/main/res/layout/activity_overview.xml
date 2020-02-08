@@ -8,12 +8,14 @@
     android:fitsSystemWindows="true"
     tools:context=".Overview"
     tools:openDrawer="start">
-    
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -23,45 +25,47 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
 
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <FrameLayout
+                android:id="@+id/fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floatingActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="@color/endColor"
+                    android:clickable="true"
+                    app:srcCompat="@drawable/ic_plus" />
+
+                <Button
+                    android:id="@+id/Scanner"
+                    android:layout_width="92dp"
+                    android:layout_height="wrap_content"
+                    android:background="#00D11919"
+                    android:backgroundTint="#00A81A1A"
+                    android:text="Scanner"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    tools:text="Scanner" />
 
 
+            </FrameLayout>
 
-
-        </androidx.recyclerview.widget.RecyclerView>
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:backgroundTint="@color/endColor"
-            android:layout_margin="10dp"
-            android:clickable="true"
-            app:srcCompat="@drawable/ic_plus" />
-
-
-    </FrameLayout>
-
-</RelativeLayout>
-
-
-
-
-
+        </RelativeLayout>
 
 
     </LinearLayout>

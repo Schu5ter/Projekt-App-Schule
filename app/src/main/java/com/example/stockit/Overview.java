@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -36,6 +37,7 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
     private GoogleSignInClient mGoogleSignInClient;
     private ArrayList<Artikel> mArtikel = new ArrayList<>();
     private RecyclerView recyclerView;
+    private Button scanner;
 
 
 
@@ -46,6 +48,17 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
         setContentView(R.layout.activity_overview);
 
         recyclerView = findViewById(R.id.recyclerview);
+
+        scanner = (Button) findViewById(R.id.Scanner);
+        scanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openScannerActivity();
+
+            }
+        });
+
+
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("artikel");
         //Toolbar
@@ -158,6 +171,10 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
         startActivity(intent);
     }
 
+    public void openScannerActivity(){
+        Intent intent = new Intent(this, ScannerActivity.class );
+        startActivity(intent );
+    }
 
 
     private void initRecyclerView(){
