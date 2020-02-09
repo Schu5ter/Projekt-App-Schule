@@ -37,7 +37,11 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
     private GoogleSignInClient mGoogleSignInClient;
     private ArrayList<Artikel> mArtikel = new ArrayList<>();
     private RecyclerView recyclerView;
+
     private Button scanner;
+
+    private String user;
+
 
 
 
@@ -49,6 +53,7 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
 
         recyclerView = findViewById(R.id.recyclerview);
 
+
         scanner = (Button) findViewById(R.id.Scanner);
         scanner.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +63,9 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
             }
         });
 
+
+
+        user = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("artikel");
@@ -104,9 +112,11 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
                 mArtikel.clear();
 
                 for(DataSnapshot artikelsnapshot: dataSnapshot.getChildren()){
-                    Artikel artikel = artikelsnapshot.getValue(Artikel.class);
-                    mArtikel.add(artikel);
 
+                    Artikel artikel = artikelsnapshot.getValue(Artikel.class);
+                    if(artikel.getUserId().equals(user)) {
+                        mArtikel.add(artikel);
+                    }
                 }
                initRecyclerView();
             }
@@ -127,10 +137,6 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.nav_personal:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new PersonalFragment()).commit();
-                break;
-            case R.id.nav_gruppe:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new GroupFragment()).commit();
                 break;
             case R.id.nav_logout:
                 signOut();

@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/balken"
         android:layout_width="10dp"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:background="@color/endColor"/>
     <TextView
         android:id="@+id/artikelname"
@@ -31,13 +31,13 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         />
-    <Button
+    <ImageView
         android:id="@+id/delete"
         android:layout_width="30sp"
         android:layout_height="30sp"
         android:background="@drawable/ic_delete"
         android:layout_toRightOf="@+id/artikelanzahl"
-        android:layout_marginLeft="225dp"
+        android:layout_marginLeft="100dp"
         android:layout_centerVertical="true"
         />
 

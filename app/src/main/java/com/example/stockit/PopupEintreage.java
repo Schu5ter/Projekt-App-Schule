@@ -13,8 +13,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import static com.google.firebase.auth.FirebaseAuth.getInstance;
 
 public class PopupEintreage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -22,6 +25,7 @@ public class PopupEintreage extends AppCompatActivity implements AdapterView.OnI
     Button btn_addArtikel;
     public static String number;
     FirebaseDatabase database;
+    FirebaseAuth auth;
     DatabaseReference reference;
 
 
@@ -33,6 +37,10 @@ public class PopupEintreage extends AppCompatActivity implements AdapterView.OnI
         //Getting id's
         et_NameArtikel = findViewById(R.id.et_NameArtikel);
         btn_addArtikel = findViewById(R.id.btn_addArtikel);
+
+        //
+         String  userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
 
 
 
@@ -87,14 +95,16 @@ public class PopupEintreage extends AppCompatActivity implements AdapterView.OnI
 
     public  void addArtikel(){
              String artikelname = et_NameArtikel.getText().toString();
+             String  userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
 
 
         if(!TextUtils.isEmpty((CharSequence) artikelname)){
-           String id = reference.push().getKey();
+           String artikelId = reference.push().getKey();
 
-           Artikel artikel = new Artikel(id, artikelname, number);
+           Artikel artikel = new Artikel( userId, artikelId, artikelname, number);
 
-           reference.child(id).setValue(artikel);
+           reference.child(artikelId).setValue(artikel);
 
             Toast.makeText(this, "Artikel added", Toast.LENGTH_SHORT).show();
         }else{

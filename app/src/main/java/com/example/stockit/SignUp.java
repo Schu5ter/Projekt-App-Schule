@@ -10,7 +10,9 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.EventLogTags;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,11 +31,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.regex.Pattern;
+
 public class SignUp extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
 
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("(?=.*[A-Z])" + ".{6,}");
 
 
     private FirebaseAuth Auth;
@@ -61,8 +67,8 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, T
         et_EmailSignIn = findViewById(R.id.et_EmailSignIn);
         et_PasswordSignIn = findViewById(R.id.et_PasswordSignIn);
 
-         String email =et_EmailSignIn.getText().toString();
-         String password = et_PasswordSignIn.getText().toString();
+        String email = et_EmailSignIn.getText().toString();
+        String password = et_PasswordSignIn.getText().toString();
 
         //Google Sign in Config
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -75,30 +81,12 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, T
 
         Auth = FirebaseAuth.getInstance();
 
-
-
-/*
-        Auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(SignUp.this, "funktioniert", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-        */
-
-
-
-
     }
 
 
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseUser currentUser = Auth.getCurrentUser();
 
     }
 
@@ -108,97 +96,80 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, T
         String email = et_EmailSignIn.getText().toString();
         String password = et_PasswordSignIn.getText().toString();
 
-
-        if (TextUtils.isEmpty((email)))
-        {
-            et_EmailSignIn.setError("Required.");
+        if (emailValid() == false | passwordValid() == false) {
+            Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
         } else {
-            et_EmailSignIn.setError(null);
+
+            Auth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                showProgressDialog();
+                                Toast.makeText(SignUp.this, "Erfolgreich angemeldet", Toast.LENGTH_SHORT).show();
+
+                                FirebaseUser user = Auth.getCurrentUser();
+                                updateUI(user);
+
+
+                            } else {
+
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(SignUp.this, "Anmeldung Fehlgeschlagen", Toast.LENGTH_SHORT).show();
+                                // updateUI(null);
+
+                            }
+
+                            // [START_EXCLUDE]
+                            hideProgressDialog();
+                            // [END_EXCLUDE]
+                        }
+                    });
         }
-        if (TextUtils.isEmpty((password)) ){
-            et_PasswordSignIn.setError("Required");
-        } else {
-            et_PasswordSignIn.setError(null);
-        }
-        showProgressDialog();
-
-        Auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-
-                if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
-
-                    Toast.makeText(SignUp.this, "Erfolgreich angemeldet", Toast.LENGTH_SHORT).show();
-
-                    FirebaseUser user = Auth.getCurrentUser();
-                   updateUI(user);
-
-
-                } else {
-
-                    // If sign in fails, display a message to the user.
-                    Toast.makeText(SignUp.this, "Authentication Faild", Toast.LENGTH_SHORT).show();
-                   // updateUI(null);
-
-                }
-
-                // [START_EXCLUDE]
-                hideProgressDialog();
-                // [END_EXCLUDE]
-            }
-        });
     }
 
 
     private void emailSignIn() {
         String email = et_EmailSignIn.getText().toString();
-        String password= et_PasswordSignIn.getText().toString();
+        String password = et_PasswordSignIn.getText().toString();
 
-        if (TextUtils.isEmpty((email)))
-        {
-            et_EmailSignIn.setError("Required.");
+        if (emailValid() == false | passwordValid() == false) {
+            Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
         } else {
-           // et_EmailSignIn.setError(null);
+
+            Auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+
+                            if (task.isSuccessful()) {
+
+                                // Sign in success, update UI with the signed-in user's information
+                                showProgressDialog();
+                                Toast.makeText(SignUp.this, "Authentication Successful", Toast.LENGTH_SHORT).show();
+                                FirebaseUser user = Auth.getCurrentUser();
+                                updateUI(user);
+
+
+                            } else {
+
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(SignUp.this, "Authentication Faild", Toast.LENGTH_SHORT).show();
+                                updateUI(null);
+
+                            }
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(SignUp.this, " Email oder Password ist Falsch", Toast.LENGTH_SHORT).show();
+                            }
+
+                            // [START_EXCLUDE]
+                            hideProgressDialog();
+                            // [END_EXCLUDE]
+                        }
+                    });
         }
-        if (TextUtils.isEmpty((password)) ){
-            et_PasswordSignIn.setError("Required");
-        } else {
-           // et_PasswordSignIn.setError(null);
-        }
-
-        showProgressDialog();
-
-        Auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-
-                if (task.isSuccessful()) {
-
-                    // Sign in success, update UI with the signed-in user's information
-                    Toast.makeText(SignUp.this, "Authentication Successful", Toast.LENGTH_SHORT).show();
-                    FirebaseUser user = Auth.getCurrentUser();
-                    updateUI(user);
-
-
-                } else {
-
-                    // If sign in fails, display a message to the user.
-                    Toast.makeText(SignUp.this, "Authentication Faild", Toast.LENGTH_SHORT).show();
-                    updateUI(null);
-
-                }
-                if (!task.isSuccessful()) {
-                    Toast.makeText(SignUp.this, " Email oder Password ist Falsch", Toast.LENGTH_SHORT).show();
-                }
-
-                // [START_EXCLUDE]
-                hideProgressDialog();
-                // [END_EXCLUDE]
-            }
-        });
     }
 
 
@@ -247,7 +218,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, T
                             Toast.makeText(SignUp.this, "Angemeldet mit Google", Toast.LENGTH_SHORT).show();
 
 
-
                             FirebaseUser user = Auth.getCurrentUser();
                             updateUI(user);
 
@@ -266,7 +236,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, T
     }
 
 
-
     // [START signin]
     private void firebaseSignIn() {
         Intent signInIntent = GoogleSignInClient.getSignInIntent();
@@ -279,7 +248,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, T
     @Override
     public void onClick(View v) {
         String email = et_EmailSignIn.getText().toString();
-        String password= et_PasswordSignIn.getText().toString();
+        String password = et_PasswordSignIn.getText().toString();
 
         int i = v.getId();
 //firebase sign in funktioniert einwandfrei
@@ -288,10 +257,11 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, T
 
 
         } else if (i == R.id.btn_SignIn) {
-           emailSignIn();
 
-            //checking sign in
-        } else if (i == R.id.btn_CreateAccount){
+            emailSignIn();
+
+        } else if (i == R.id.btn_CreateAccount) {
+
             createAccount();
 
         }
@@ -325,6 +295,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, T
 
     }
 
+
     public void updateUI(FirebaseUser currentUser) {
         hideProgressDialog();
         if (currentUser != null) {  // User is signed in
@@ -335,12 +306,9 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, T
         } else {
             Toast.makeText(this, "Sign in Faild", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, SignUp.class));
-            // No user is signed in
-            // go to loging page
         }
 
     }
-
 
     @Override
 
@@ -367,12 +335,40 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, T
 
     @Override
     public void afterTextChanged(Editable s) {
-        if (et_PasswordSignIn.getText().toString().length() < 6){
-            et_PasswordSignIn.setError("The password should be at least 6 charachters");
+    }
+
+    public boolean emailValid() {
+        String email = et_EmailSignIn.getText().toString();
+
+        if (email.isEmpty()) {
+            et_EmailSignIn.setError("Please enter a Email");
+            return false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            et_EmailSignIn.setError("Please enter a Valid Email Address");
+            return false;
+        } else {
+            et_EmailSignIn.setError(null);
+            return true;
         }
     }
-    
+
+    public boolean passwordValid() {
+        String password = et_PasswordSignIn.getText().toString();
+        if (TextUtils.isEmpty(password)) {
+            et_PasswordSignIn.setError("Please enter a Password");
+            return false;
+        } else if (!PASSWORD_PATTERN.matcher(password).matches()) {
+            et_PasswordSignIn.setError("The password should be at least 6 charachters and Include a Capital Letter");
+            return false;
+
+        } else {
+            et_PasswordSignIn.setError(null);
+            return true;
         }
+
+    }
+
+}
 
 
 
