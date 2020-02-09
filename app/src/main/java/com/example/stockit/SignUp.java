@@ -96,12 +96,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, T
         String email = et_EmailSignIn.getText().toString();
         String password = et_PasswordSignIn.getText().toString();
 
-/*
-     if (email.isEmpty()) {
-            et_EmailSignIn.setError("Please enter Email");
-        } else {
-
-*/
         if (emailValid() == false | passwordValid() == false) {
             Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
         } else {
