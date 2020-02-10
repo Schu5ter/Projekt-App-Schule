@@ -129,7 +129,8 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
     public void handleResult(Result result) {
         final String myResult = result.getText();
         Log.d("QRCodeScanner", result.getText());
-        Log.d("QRCodeScanner", result.getBarcodeFormat().toString());
+        Log.d("QRCodeScanner", result.getBarcodeFormat().toString())
+        ;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Scan Result");
@@ -146,8 +147,13 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
                 startActivity(browserIntent);
             }
         });
-        builder.setMessage(result.getText());
+        builder.setMessage(result.getText());/* ausgabe*/
         AlertDialog alert1 = builder.create();
         alert1.show();
+        scannerView.stopCamera();
+
+        if (result.getText() != "") {
+            scannerView.stopCamera();
+                   }
     }
 }
