@@ -50,7 +50,12 @@ public class Overview extends AppCompatActivity implements NavigationView.OnNavi
 
         user = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("artikel");
+
+
+
+
         //Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
