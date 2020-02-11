@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout android:background="@drawable/solid" xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/solid"
     tools:context=".MainActivity">
-
-
 
 
     <Button
@@ -14,34 +13,14 @@
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="532dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="40dp"
         android:background="@drawable/costum_buttons"
         android:gravity="center"
         android:text="@string/sign_in"
         android:textColor="#ffffff"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_signUp"
-        app:layout_constraintVertical_bias="0.099" />
-
-    <Button
-        android:id="@+id/btn_signUp"
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="448dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/costum_buttons"
-        android:gravity="center"
-        android:onClick="toSignUp"
-        android:text="@string/sign_up"
-        android:textColor="#ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,11 +31,22 @@
         android:gravity="center"
         android:text="@string/titel"
         android:textSize="50sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_signUp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_signIn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.912" />
+
+    <ImageView
+        android:layout_width="276dp"
+        android:layout_height="303dp"
+        android:layout_marginTop="60dp"
+        android:src="@mipmap/stockit"
+        app:layout_constraintBottom_toTopOf="@+id/tv-titelStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
