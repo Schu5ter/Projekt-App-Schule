@@ -1,8 +1,15 @@
 package com.example.stockit;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 import java.io.*;
 import java.net.*;
 import java.util.regex.*;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 
 public class Uebersetzer {
@@ -16,25 +23,25 @@ public class Uebersetzer {
         try {
             URL url= new URL("https://api.ean-search.org/api?token="
                     + apiToken + "&op=barcode-lookup&ean=" + ean);
-            InputStream is = url.openStream();
-            int ptr = 0;
 
-            StringBuffer apiResult = new StringBuffer();
-            while ((ptr = is.read()) != -1) {
-                apiResult.append((char)ptr);
+            URLConnection conn = url.openConnection();
+
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(conn.getInputStream());
+
+            NodeList nodes = doc.getElementsByTagName("product");
+            for (int i = 0; i < nodes.getLength(); i++) {
+                Element element = (Element) nodes.item(i);
+                NodeList title = element.getElementsByTagName("name");
+                Element line = (Element) title.item(0);
+                System.out.println(line.getTextContent());
             }
-            // you can use a real XML parser,
-            // but a regular expression is much faster
-            Pattern p = Pattern.compile("(.*)");
-            Matcher m = p.matcher(apiResult);
-            if (m.find()) {
-                Name = m.group(1);
-                System.out.println(Name);
-            }
-        } catch ( Exception ex ) {
-            System.out.println("test");
-            ex.printStackTrace();
         }
-        System.out.println("EAN " + ean + " => " + Name);
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
+
