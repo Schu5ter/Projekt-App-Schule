@@ -154,6 +154,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
         if (result.getText() != "") {
             scannerView.stopCamera();
+
                    }
     }
 }
