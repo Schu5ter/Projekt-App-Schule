@@ -28,6 +28,9 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView scannerView;
     private static int camId = Camera.CameraInfo.CAMERA_FACING_BACK;
+    String apiToken = "9df0d6de4820b1c9baa8270ac23161"; // your private API access token
+    String ean = "5000112546415"; // search for this EAN code
+    String Name = "unknown";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

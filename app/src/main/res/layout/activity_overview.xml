@@ -16,16 +16,6 @@
         android:orientation="vertical">
 
 
-        <Button
-            android:id="@+id/Scanner"
-            android:layout_width="wrap_content"
-            android:layout_height="61dp"
-            android:background="@color/red"
-            android:backgroundTint="@color/colorAccent"
-            android:text="Scanner"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            tools:text="Scanner" />
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -34,6 +24,16 @@
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        <Button
+            android:id="@+id/Scanner"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:background="@color/red"
+            android:backgroundTint="@color/endColor"
+            android:text="Scanner"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            tools:text="Scanner" />
 
         <RelativeLayout
             android:layout_width="match_parent"
